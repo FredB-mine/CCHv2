@@ -6,8 +6,6 @@
  * @returns stripped text and formulas
  */
 
-const { query } = require("@ifyour/deeplx");
-
 function replaceBlock(text) {
     var res = "", formula_tmp = "";
     var formula = [], cur_brace = 1;  // 1 for {, 0 for }
@@ -47,10 +45,5 @@ function recoverBlock(translated_text, formula) {
  * @returns translated text
  */
 async function translate(text) {
-    alert(text)
-    return query({
-        text: text,
-        source_lang: 'en',
-        target_lang: 'zh'
-    });
+   
 }
