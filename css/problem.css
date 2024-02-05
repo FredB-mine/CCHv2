@@ -490,8 +490,8 @@ p {
 	font-weight: 700
 }
 
-.tex-font-style-up {
-}
+/* .tex-font-style-up {
+} */
 
 .tex-font-style-it {
 	font-style: italic
@@ -609,7 +609,7 @@ p {
 	text-align: center;
 }
 
-.copyInfo {
+.copyInfo, .translateInfo {
 	margin-left: 10px;
 	user-select: none;
 	cursor: pointer;
@@ -846,11 +846,11 @@ table > tr > th, table > tr > td {
 	border-color: var(--problem-window-table-border-color);
 }
 
-.copyCode, .copyInfo {
+.copyCode, .copyInfo, .translateInfo {
 	background: var(--problem-window-copy-button-background-color);
 }
 
-.copyCode:hover, .copyInfo:hover {
+.copyCode:hover, .copyInfo:hover, .translateInfo:hover {
 	background: var(--problem-window-copy-button-hover-background-color);
 }
 
