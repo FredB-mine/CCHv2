@@ -26,7 +26,7 @@ function getRealTimeLimitNumber(x) {
 	return Number(x[0]);
 }
 
-function getRealmemoryLimit(x) {
+function getRealMemoryLimit(x) {
 	x = x.split(" ");
 	if (x[1] == "megabytes" || x[1] == "megabyte")
 		return x[0] + "MB";
@@ -35,7 +35,7 @@ function getRealmemoryLimit(x) {
 	return x[0] + "KB";
 }
 
-function getRealmemoryLimitNumber(x) {
+function getRealMemoryLimitNumber(x) {
 	x = x.split(" ");
 	if (x[1] == "megabytes" || x[1] == "megabyte")
 		return Number(x[0]);
@@ -80,16 +80,32 @@ function getOutputFileType(x) {
 
 function initProblemPageInfo(page, data, id) {
 	page.html("");
-	page.append(`<div class="problemTitle">${data.find(".title").html()}</div>`);
+	page.append(
+		`<div class="problemTitle">${data.find(".title").html()}</div>`
+	);
 	problemCurrentPageList[id][4].title = data.find(".title").html();
-	page.append(`<div class="problemOrigin">${localize("origin")} → ${problemCurrentPageList[id][4].contestName}</div>`)
+	page.append(
+		`<div class="problemOrigin">
+			${localize("origin")} → ${problemCurrentPageList[id][4].contestName}
+		</div>`
+	)
 	var tg = $(`<div class="problemTags"></div>`);
 	if (data.find(".time-limit").length != 0)
-		tg.append(`<div class='problemTag primaryColor'><i class='fas fa-clock'></i>${getRealTimeLimit(data.find(".time-limit").contents().eq(1).text())}</div>`),
+		tg.append(
+			`<div class='problemTag primaryColor'>
+				<i class='fas fa-clock'></i>
+				${getRealTimeLimit(data.find(".time-limit").contents().eq(1).text())}
+			</div>`
+		),
 		problemCurrentPageList[id][4].timelimit = getRealTimeLimitNumber(data.find(".time-limit").contents().eq(1).text())
 	if (data.find(".memory-limit").length != 0)
-		tg.append(`<div class='problemTag warningColor'><i class='fas fa-microchip'></i>${getRealmemoryLimit(data.find(".memory-limit").contents().eq(1).text())}</div>`),
-		problemCurrentPageList[id][4].memoryLimit = getRealmemoryLimitNumber(data.find(".memory-limit").contents().eq(1).text())
+		tg.append(
+			`<div class='problemTag warningColor'>
+				<i class='fas fa-microchip'></i>
+				${getRealMemoryLimit(data.find(".memory-limit").contents().eq(1).text())}
+			</div>`
+		),
+		problemCurrentPageList[id][4].memoryLimit = getRealMemoryLimitNumber(data.find(".memory-limit").contents().eq(1).text())
 	if (data.find(".input-file").length != 0)
 		tg.append(`<div class='problemTag successColor'><i class='fas fa-sign-in-alt'></i>${getRealInputFile(data.find(".input-file").contents().eq(1).text())}</div>`),
 		problemCurrentPageList[id][4].input = getInputFileType(getRealInputFile(data.find(".input-file").contents().eq(1).text()));
@@ -109,7 +125,25 @@ function initProblemPageInfo(page, data, id) {
 			var str = "0123456789qwertyuiopasdfghjklzxcvbnm";
 			for (var j = 0; j < 18; j++)
 				rnd += str[Math.floor(Math.random() * str.length)];
-			var pqp = $(`<div class="blockManager"><div class="blockManagerTitle">${l}<span class='copyInfo'><span info='copyInfo'>${languageOption.general.copyInfo}</span></span></div><div class="blockManagerContent" id="${rnd}">${qq.eq(i).html()}</div></div>`);
+			var pqp = $(
+				`<div class="blockManager">
+          <div class="blockManagerTitle">${l}
+            <span class='copyInfo'>
+              <span info='copyInfo'>
+               ${languageOption.general.copyInfo}
+              </span>
+            </span>
+            <span class='translateInfo'>
+              <span info='translateInfo'>
+                ${languageOption.general.translateInfo}
+              </span>
+            </span>
+          </div>
+          <div class="blockManagerContent" id="${rnd}">
+            ${qq.eq(i).html()}
+          </div>
+        </div>`
+      );
 			pqp.attr("statement-info", $('<div>' + qq.eq(i).html().replace(/\$\$\$/g, '$').replace(/<\/p>/g, "</p>\n\n") + "</div>").text());
 			page.append(pqp);
 			problemNewWinJQ.find("#" + rnd).find("a").click(function() {
@@ -167,6 +201,7 @@ function initProblemPageInfo(page, data, id) {
 			page.append(oo);
 		}
 		problemNewWinJQ.append(`<script>loadCopyOption()</script>`)
+    problemNewWinJQ.append(`<script>loadTranslateOption()</script>`)
 	}
 	problemNewWinJQ.append(`<script>reloadMath("problem-${problemCurrentPageList[id][0]}")</script>`)
 }
