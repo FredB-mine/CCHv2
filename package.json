@@ -31,8 +31,5 @@
         "page-cache": false,
         "plugin": true,
         "java": true
-    },
-    "dependencies": {
-        "@ifyour/deeplx": "^0.1.17"
     }
 }
