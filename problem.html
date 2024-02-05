@@ -142,6 +142,7 @@
 		<script src="./js/settings.js"></script>
 		<script src="./js/problem-watcher.js"></script>
 		<script src="./js/langs.js"></script>
+    <script src="./js/translate.js"></script>
 		<script>
 			reloadSettings();
 			if(!RunInNwjs){
@@ -237,6 +238,17 @@
 					backToNormal2($(this));
 				})
 			}
+      function loadTranslateOption() {
+        $(".translateInfo").unbind("click").click(function() {
+          var content = $(this).parent().parent().attr("statement-info");
+          try {
+            var translated = translate(content);
+            alert(JSON.stringify(translated));
+          } catch (error) {
+            alert(error);
+          }
+        })
+      }
 			function announcementDisplay(x){
 				alert(x);
 			}
