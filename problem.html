@@ -1,260 +1,270 @@
 <!DOCTYPE html>
 <html>
-	<head lang="en">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script src="./js/json3.min.js"></script>
-		<script src="./js/jquery.min.js"></script>
-		<meta name="referrer" content="never">
-		<script src="./js/highlight.min.js"></script>
-		<!-- <script src="./js/copy-tex.js"></script> -->
-		<script src="./js/highlightjs-line-numbers.js"></script>
-		<link rel="stylesheet" href="./css/problem.css">
-		<link rel="stylesheet" href="./css/all.min.css">
-		<!-- <link rel="stylesheet" href="./KaTeX/katex.min.css"> -->
-		<script>
-			var RunInNwjs = true;
-			try{
-				var win = nw.Window.get();
-				setTimeout(function(){win.show();},300);
-			}
-			catch(error){
-				document.title = 'Codeforces Contest Helper (Website Mode)';
-				console.log('Switched to Website Mode');
-				RunInNwjs = false;
-			}
-			var DarkMode = false;
-			if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
-				if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-					DarkMode = true, $('.ThemeTypeIf').attr('href','./css/dark.css');
-				}
-			}
-		</script>
-		<script type="text/x-mathjax-config">
-			MathJax.Hub.Config({
-				showProcessingMessages: false,
-			  showMathMenu: false,
-			  showMathMenuMSIE: false,
-			  tex2jax: {
-			    inlineMath: [
-			      ['$$$', '$$$']
-			    ],
-			    displayMath: [
-			      ['$$$$$$', '$$$$$$'],
-			    ],
-			  },
-			  styles: {
-			    "#MathJax_Message": {
-			      "display": "none",
-			    }
-			  }
-			});
-		</script>
-		<script src="./mathjax2.7/MathJax.js?config=TeX-AMS_HTML-full"></script>
-	</head>
-	<body>
-		<link id="ThemeTypeIf" rel="stylesheet" href="./css/dark.css">
-		<script class="cssController"></script>
-		<div class="HtmlContainer">
-			<div id="ToolList">
-				<div id="ToolListTitle" info="problemTitle"></div>
-				<div style="position: absolute; top: 0px; right: 0px; display: flex; flex-direction: row">
-					<div class="ToolListButton ToolListMinimize">
-						<i class="fas fa-minus"></i>
-					</div>
-					<div class="ToolListButton ToolListMaximize">
-						<i class="far fa-square"></i>
-					</div>
-					<div class="ToolListButton ToolListClose">
-						<i class="fas fa-times"></i>
-					</div>
-				</div>
-			</div>
-			<div style="position: relative">
-				<div id="watchDisplayer">
-				</div>
-				<div class="loadingInterface submitWindow" style="display: none; opacity: 0"><div style="height: calc(100% - 50px); width: calc(100% - 100px); padding: 10px; display: flex; flex-direction: column; overflow: hidden" class="submitInterface">
-					<div class="submitInterfaceTitle" style="height: 30px; width: calc(100% - 10px); display: flex; flex-direction: row; padding: 5px; overflow-x: hidden">
-						<div style="overflow-x: hidden; flex: 1">
-							<span class="submitUsername"></span> <i class="fa-solid fa-paper-plane"></i> <span class="fas fa-angle-right"></span> <span class="submitProblemID"></span>
-						</div><div style="position: relative; width: 24px"><i class="fas fa-times red closeSubmitPage" style="cursor: pointer"></i></div>
-					</div>
-					<div style="width: calc(100% - 10px); padding: 5px;display: flex; flex-direction: row">
-						<div style="position: relative; width: 30px"><i class="fas fa-code"></i></div>
-						<div style="flex: 1"><select class="submitLanguageChoser"></select></div>
-					</div>
-					<div class="submitInterfaceEditor" style="overflow: hidden; position: relative; flex: 1">
-						<textarea id="submitCodeArea" style="width: calc(100% - 12px); height: calc(100% - 12px); overflow: scroll; resize: none"></textarea>
-					</div>
-					<div class="submitButton">
-						<button class="bigButton primaryColor singleContestantButton">
-							<i class="fas fa-paper-plane"></i><span info="sendAnswer"></span>
-						</button>
-					</div>
-				</div></div>
-				<div class="loadingInterface addProblemWindow" style="display: none; opacity: 0"><div style="height: 200px; width: 320px; padding: 10px; display: flex; flex-direction: column; overflow: hidden" class="addProblemInterface">
-					<div class="addProblemfaceTitle" style="height: 30px; width: 100%; font-size: 16px; display: flex; flex-direction: row; overflow: hidden; position: relative;">
-						<div style="overflow: hidden; flex: 1;">
-							<span info="addIntoProblems" style="user-select: none"></span>
-						</div><div style="position: absolute; width: 24px; top: 0px; right: 0px;"><i class="fas fa-times red closeAddProblemPage" style="cursor: pointer"></i></div>
-					</div>
-					<div class="inputButtonSplitter problemInfoInputArea">
-						<div class="inputButtonSplitterTitle" info="add_problem"></div>
-						<input info="problemId"></input>
-						<button class="primaryColor"><i class="fas fa-paper-plane"></i></button>
-					</div>
-					<div class="inputButtonSplitter contestInfoInputArea">
-						<div class="inputButtonSplitterTitle" info="add_contest"></div>
-						<input info="contestId"></input>
-						<button class="primaryColor"><i class="fas fa-paper-plane"></i></button>
-					</div>
-				</div></div>
-				<div class="sideBar"><div>
-				</div></div>
-				<div style="display: flex; flex-direction: column; width: calc(100% - 35px); height: 100%; position: absolute; top: 0px; left: 35px; overflow: hidden; border-radius: 5px;" class="problemPageRightContent">
-					<div class="starterPage" style="width: 100%; height: 100%; display: grid; place-items: center; position: absolute; right: 0px; bottom: 0px">
-						<div style="text-align: center;">
-							<i class="fas fa-rocket fa-3x" style="margin-bottom: 10px;"></i><br/>
-							<span style="font-size:24px" info="problemWelcome"></span>
-						</div>
-					</div>
-					<div class="innerContent">
-						
-					</div>
-					<div class="progressBar">
-						<div style="flex: 1">
-							<div class="sendCurrData actions" style="flex: 1"><i class="fas fa-arrow-right"></i></div>
-							<div class="sendAllData actions" style="flex: 1"><i class="fas fa-arrow-circle-right"></i></div>
-						</div>
-						<div class="progressBarMain">
-							<div class="problemName"></div>
-						</div>
-						<div style="flex: 1">
-							<div class="submitCode actions" style="flex: 1"><i class="fas fa-paper-plane"></i></div>
-							<div class="reloadStatement actions" style="flex: 1"><i class="fas fa-sync-alt"></i></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
-	<footer>
-		<script src="./js/locale.js"></script>
-		<script src="./js/settings.js"></script>
-		<script src="./js/problem-watcher.js"></script>
-		<script src="./js/langs.js"></script>
+  <head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="./js/json3.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/md5.min.js"></script>
+    <meta name="referrer" content="never">
+    <script src="./js/highlight.min.js"></script>
+    <!-- <script src="./js/copy-tex.js"></script> -->
+    <script src="./js/highlightjs-line-numbers.js"></script>
+    <link rel="stylesheet" href="./css/problem.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <!-- <link rel="stylesheet" href="./KaTeX/katex.min.css"> -->
+    <script>
+      var RunInNwjs = true;
+      try{
+        var win = nw.Window.get();
+        setTimeout(function(){win.show();},300);
+      }
+      catch(error){
+        document.title = 'Codeforces Contest Helper (Website Mode)';
+        console.log('Switched to Website Mode');
+        RunInNwjs = false;
+      }
+      var DarkMode = false;
+      if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
+        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+          DarkMode = true, $('.ThemeTypeIf').attr('href','./css/dark.css');
+        }
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        showProcessingMessages: false,
+        showMathMenu: false,
+        showMathMenuMSIE: false,
+        tex2jax: {
+          inlineMath: [
+            ['$$$', '$$$']
+          ],
+          displayMath: [
+            ['$$$$$$', '$$$$$$'],
+          ],
+        },
+        styles: {
+          "#MathJax_Message": {
+            "display": "none",
+          }
+        }
+      });
+    </script>
+    <script src="./mathjax2.7/MathJax.js?config=TeX-AMS_HTML-full"></script>
+  </head>
+  <body>
+    <link id="ThemeTypeIf" rel="stylesheet" href="./css/dark.css">
+    <script class="cssController"></script>
+    <div class="HtmlContainer">
+      <div id="ToolList">
+        <div id="ToolListTitle" info="problemTitle"></div>
+        <div style="position: absolute; top: 0px; right: 0px; display: flex; flex-direction: row">
+          <div class="ToolListButton ToolListMinimize">
+            <i class="fas fa-minus"></i>
+          </div>
+          <div class="ToolListButton ToolListMaximize">
+            <i class="far fa-square"></i>
+          </div>
+          <div class="ToolListButton ToolListClose">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+      </div>
+      <div style="position: relative">
+        <div id="watchDisplayer">
+        </div>
+        <div class="loadingInterface submitWindow" style="display: none; opacity: 0"><div style="height: calc(100% - 50px); width: calc(100% - 100px); padding: 10px; display: flex; flex-direction: column; overflow: hidden" class="submitInterface">
+          <div class="submitInterfaceTitle" style="height: 30px; width: calc(100% - 10px); display: flex; flex-direction: row; padding: 5px; overflow-x: hidden">
+            <div style="overflow-x: hidden; flex: 1">
+              <span class="submitUsername"></span> <i class="fa-solid fa-paper-plane"></i> <span class="fas fa-angle-right"></span> <span class="submitProblemID"></span>
+            </div><div style="position: relative; width: 24px"><i class="fas fa-times red closeSubmitPage" style="cursor: pointer"></i></div>
+          </div>
+          <div style="width: calc(100% - 10px); padding: 5px;display: flex; flex-direction: row">
+            <div style="position: relative; width: 30px"><i class="fas fa-code"></i></div>
+            <div style="flex: 1"><select class="submitLanguageChoser"></select></div>
+          </div>
+          <div class="submitInterfaceEditor" style="overflow: hidden; position: relative; flex: 1">
+            <textarea id="submitCodeArea" style="width: calc(100% - 12px); height: calc(100% - 12px); overflow: scroll; resize: none"></textarea>
+          </div>
+          <div class="submitButton">
+            <button class="bigButton primaryColor singleContestantButton">
+              <i class="fas fa-paper-plane"></i><span info="sendAnswer"></span>
+            </button>
+          </div>
+        </div></div>
+        <div class="loadingInterface addProblemWindow" style="display: none; opacity: 0"><div style="height: 200px; width: 320px; padding: 10px; display: flex; flex-direction: column; overflow: hidden" class="addProblemInterface">
+          <div class="addProblemfaceTitle" style="height: 30px; width: 100%; font-size: 16px; display: flex; flex-direction: row; overflow: hidden; position: relative;">
+            <div style="overflow: hidden; flex: 1;">
+              <span info="addIntoProblems" style="user-select: none"></span>
+            </div><div style="position: absolute; width: 24px; top: 0px; right: 0px;"><i class="fas fa-times red closeAddProblemPage" style="cursor: pointer"></i></div>
+          </div>
+          <div class="inputButtonSplitter problemInfoInputArea">
+            <div class="inputButtonSplitterTitle" info="add_problem"></div>
+            <input info="problemId"></input>
+            <button class="primaryColor"><i class="fas fa-paper-plane"></i></button>
+          </div>
+          <div class="inputButtonSplitter contestInfoInputArea">
+            <div class="inputButtonSplitterTitle" info="add_contest"></div>
+            <input info="contestId"></input>
+            <button class="primaryColor"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div></div>
+        <div class="sideBar"><div>
+        </div></div>
+        <div style="display: flex; flex-direction: column; width: calc(100% - 35px); height: 100%; position: absolute; top: 0px; left: 35px; overflow: hidden; border-radius: 5px;" class="problemPageRightContent">
+          <div class="starterPage" style="width: 100%; height: 100%; display: grid; place-items: center; position: absolute; right: 0px; bottom: 0px">
+            <div style="text-align: center;">
+              <i class="fas fa-rocket fa-3x" style="margin-bottom: 10px;"></i><br/>
+              <span style="font-size:24px" info="problemWelcome"></span>
+            </div>
+          </div>
+          <div class="innerContent">
+            
+          </div>
+          <div class="progressBar">
+            <div style="flex: 1">
+              <div class="sendCurrData actions" style="flex: 1"><i class="fas fa-arrow-right"></i></div>
+              <div class="sendAllData actions" style="flex: 1"><i class="fas fa-arrow-circle-right"></i></div>
+            </div>
+            <div class="progressBarMain">
+              <div class="problemName"></div>
+            </div>
+            <div style="flex: 1">
+              <div class="submitCode actions" style="flex: 1"><i class="fas fa-paper-plane"></i></div>
+              <div class="reloadStatement actions" style="flex: 1"><i class="fas fa-sync-alt"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer>
+    <script src="./js/locale.js"></script>
+    <script src="./js/settings.js"></script>
+    <script src="./js/problem-watcher.js"></script>
+    <script src="./js/langs.js"></script>
     <script src="./js/translate.js"></script>
-		<script>
-			reloadSettings();
-			if(!RunInNwjs){
-				$('body').css('margin', '8px').css("width", "calc(100% - 16px)").css("height", "calc(100% - 16px)");
-				if(!DarkMode)
-					$('body').css('background','#b7b7b7');
-				else
-					$('body').css('background','#484848');
-			}
-			else{
-				nw.Screen.Init();
-				$(".ToolListClose").click(function(){
-					win.close();
-				});
-				var maximized = false;
-				$(".ToolListMaximize").click(function(){
-					if(!maximized){
-						maximized = true;
-						win.maximize();
-						$(".ToolListMaximize > i").attr("class", "far fa-clone");
-					}
-					else{
-						maximized = false;
-						win.restore();
-						$(".ToolListMaximize > i").attr("class", "far fa-square");
-					}
-				})
-				win.on("maximize", function(){
-					maximized = true;
-					win.maximize();
-					$(".ToolListMaximize > i").attr("class", "far fa-clone");
-				})
-				win.on("restore", function(){
-					maximized = false;
-					win.restore();
-					$(".ToolListMaximize > i").attr("class", "far fa-square");
-				})
-				$(".ToolListMinimize").click(function(){
-					win.minimize();
-				});
-				win.title = "Codeforces Problems";
-			}
-			function ChangeTheme(){
-				if(!DarkMode){
-					$(".ThemeTypeIf").attr("href", "./css/dark.css");
-					if(!RunInNwjs)
-						$('body').css('background','#222');
-				}
-				else{
-					$(".ThemeTypeIf").attr("href", "./css/default.css");
-					if(!RunInNwjs)
-						$('body').css('background','#bbb');
-				}
-				DarkMode = !DarkMode;
-			}
-			$(".closeSubmitPage").click(function(){
-				$(".submitWindow").css("opacity", "0");
-				setTimeout(function(){
-					$(".submitWindow").css("display", "none");
-				}, 500);
-			})
-			function backToNormal(x){
-				setTimeout(function(){
-					x.html(`<span info='copy'>${languageOption.general.copy}</span>`);
-				}, 1000)
-			}
-			function backToNormal2(x){
-				setTimeout(function(){
-					x.html(`<span info='copyInfo'>${languageOption.general.copyInfo}</span>`);
-				}, 1000)
-			}
-			function loadCopyOption(){
-				$(".copyCode").unbind("click").click(function(){
-					var q = $("<textarea></textarea>");
-					let str = $(this).parent().parent().find(".codeDisplayer").text();
-					str += (str.endsWith("\n") ? "" : "\n");
-					q.text(str);
-					$("body").append(q);
-					q.select();
-					document.execCommand("copy");
-					q.remove();
-					$(this).html(`<span info='copied'>${languageOption.general.copied}</span>`);
-					backToNormal($(this));
-				})
-				$(".copyInfo").unbind("click").click(function(){
-					var q = $("<textarea></textarea>");
-					q.text($(this).parent().parent().attr("statement-info"));
-					$("body").append(q);
-					q.select();
-					document.execCommand("copy");
-					q.remove();
-					$(this).html(`<span info='copied'>${languageOption.general.copied}</span>`);
-					backToNormal2($(this));
-				})
-			}
-      function loadTranslateOption() {
-        $(".translateInfo").unbind("click").click(function() {
-          var content = $(this).parent().parent().attr("statement-info");
-          try {
-            var translated = translate(content);
-            alert(JSON.stringify(translated));
-          } catch (error) {
-            alert(error);
+    <script>
+      reloadSettings();
+      if(!RunInNwjs){
+        $('body').css('margin', '8px').css("width", "calc(100% - 16px)").css("height", "calc(100% - 16px)");
+        if(!DarkMode)
+          $('body').css('background','#b7b7b7');
+        else
+          $('body').css('background','#484848');
+      }
+      else{
+        nw.Screen.Init();
+        $(".ToolListClose").click(function(){
+          win.close();
+        });
+        var maximized = false;
+        $(".ToolListMaximize").click(function(){
+          if(!maximized){
+            maximized = true;
+            win.maximize();
+            $(".ToolListMaximize > i").attr("class", "far fa-clone");
+          }
+          else{
+            maximized = false;
+            win.restore();
+            $(".ToolListMaximize > i").attr("class", "far fa-square");
           }
         })
+        win.on("maximize", function(){
+          maximized = true;
+          win.maximize();
+          $(".ToolListMaximize > i").attr("class", "far fa-clone");
+        })
+        win.on("restore", function(){
+          maximized = false;
+          win.restore();
+          $(".ToolListMaximize > i").attr("class", "far fa-square");
+        })
+        $(".ToolListMinimize").click(function(){
+          win.minimize();
+        });
+        win.title = "Codeforces Problems";
       }
-			function announcementDisplay(x){
-				alert(x);
-			}
-			function reloadMath(id) {
-				MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(id)]);
-			}
-		</script>
-	</footer>
+      function ChangeTheme(){
+        if(!DarkMode){
+          $(".ThemeTypeIf").attr("href", "./css/dark.css");
+          if(!RunInNwjs)
+            $('body').css('background','#222');
+        }
+        else{
+          $(".ThemeTypeIf").attr("href", "./css/default.css");
+          if(!RunInNwjs)
+            $('body').css('background','#bbb');
+        }
+        DarkMode = !DarkMode;
+      }
+      $(".closeSubmitPage").click(function(){
+        $(".submitWindow").css("opacity", "0");
+        setTimeout(function(){
+          $(".submitWindow").css("display", "none");
+        }, 500);
+      })
+      function backToNormal(x){
+        setTimeout(function(){
+          x.html(`<span info='copy'>${languageOption.general.copy}</span>`);
+        }, 1000)
+      }
+      function backToNormal2(x){
+        setTimeout(function(){
+          x.html(`<span info='copyInfo'>${languageOption.general.copyInfo}</span>`);
+        }, 1000)
+      }
+      function loadCopyOption(){
+        $(".copyCode").unbind("click").click(function(){
+          var q = $("<textarea></textarea>");
+          let str = $(this).parent().parent().find(".codeDisplayer").text();
+          str += (str.endsWith("\n") ? "" : "\n");
+          q.text(str);
+          $("body").append(q);
+          q.select();
+          document.execCommand("copy");
+          q.remove();
+          $(this).html(`<span info='copied'>${languageOption.general.copied}</span>`);
+          backToNormal($(this));
+        })
+        $(".copyInfo").unbind("click").click(function(){
+          var q = $("<textarea></textarea>");
+          q.text($(this).parent().parent().attr("statement-info"));
+          $("body").append(q);
+          q.select();
+          document.execCommand("copy");
+          q.remove();
+          $(this).html(`<span info='copied'>${languageOption.general.copied}</span>`);
+          backToNormal2($(this));
+        })
+      }
+      function loadTranslateOption() {
+        $(".translateInfo").unbind("click").click(function() {
+          var content = $(this).parent().parent().attr("origin-html");
+          translate(content, 'auto', 'zh').then((result) => {
+            var translated = "";
+            var lis = result.trans_result;
+            for (var i = 0; i < lis.length; i++) {
+              translated += lis[i].dst + '\n';
+            }
+            translated = translated.replace()
+            var content_html= $(
+              `<div class="blockManagerContent" id="${rnd}">
+                  ${qq.eq(i).html()}
+              </div>`
+            );
+          }).catch((err) => {
+            alert('Translation Error: ' + err);
+          });
+        })
+      }
+      function announcementDisplay(x){
+        alert(x);
+      }
+      function reloadMath(id) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(id)]);
+      }
+    </script>
+  </footer>
 </html>
