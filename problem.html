@@ -146,7 +146,6 @@
     <script src="./js/translate.js"></script>
     <script>
       reloadSettings();
-      var problem_id_tmp;
       if(!RunInNwjs){
         $('body').css('margin', '8px').css("width", "calc(100% - 16px)").css("height", "calc(100% - 16px)");
         if(!DarkMode)
@@ -245,7 +244,7 @@
           var content = $(this).parent().parent().attr("statement-info");
           var replace_info = replaceBlock(content);
           var rand_id = $(this).parent().parent().attr("rnd-id");
-          // alert($(this).parent().parent().attr('origin-html'));
+          var problem_id = $(this).parent().parent().attr("problem-id");
           translate(replace_info.text, null, 'zh-Hans').then((result) => {
             var translated = recoverBlock(
               result.translation, replace_info.formula
@@ -255,8 +254,9 @@
                 ${translated}
               </div>`
             );
+            // problem-1927F
             $(this).parent().parent().append(content_html);
-            reloadMath(problem_id_tmp);
+            reloadMath(problem_id);
           }).catch((err) => {
             alert('Translation Error: ' + err);
           });
@@ -266,9 +266,6 @@
         alert(x);
       }
       function reloadMath(id) {
-        if (problem_id_tmp === undefined) {
-          problem_id_tmp = id;
-        }
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(id)]);
       }
     </script>
