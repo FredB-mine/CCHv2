@@ -146,7 +146,7 @@ function initProblemPageInfo(page, data, id) {
             for (var j = 0; j < 18; j++)
                 rnd += str[Math.floor(Math.random() * str.length)];
             var pqp = $(
-                `<div class="blockManager">
+                `<div class="blockManager" >
                     <div class="blockManagerTitle">${l}
                     <span class='copyInfo'>
                         <span info='copyInfo'>
@@ -176,6 +176,7 @@ function initProblemPageInfo(page, data, id) {
                 ).text(),
                 "origin-html": qq.eq(i).html(),
                 "rnd-id": rnd,
+                "problem-id": `problem-${problemCurrentPageList[id][0]}`,
             });
             page.append(pqp);
             problemNewWinJQ
