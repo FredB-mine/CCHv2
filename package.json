@@ -1,35 +1,38 @@
 {
-    "version": "2.0",
-    "keywords": [
-        "Codeforces",
-        "node-webkit"
-    ],
-    "name": "CodeForces Contest Helper v2",
-    "description": "Codeforces Contest Helper",
-    "window": {
-        "fullscreen": false,
-        "title": "Codeforces Contest Helper v2",
-        "resizable": false,
-        "show_in_taskbar": true,
-        "width": 1000,
-        "height": 658,
-        "toolbar": true,
-        "as_desktop": false,
-        "position": "center",
-        "icon": "favicon.png",
-        "always_on_top": false,
-        "frame": false,
-        "kiosk": false,
-        "show": false,
-        "transparent": true
-    },
-    "single-instance": true,
-    "main": "index.html",
-    "chromium-args": "--disable-web-security --user-data-dir --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-renderer-backgrounding",
-    "double-tap-to-zoom-enabled": false,
-    "webkit": {
-        "page-cache": false,
-        "plugin": true,
-        "java": true
-    }
+  "version": "2.0",
+  "keywords": [
+    "Codeforces",
+    "node-webkit"
+  ],
+  "name": "CodeForces Contest Helper v2",
+  "description": "Codeforces Contest Helper",
+  "window": {
+    "fullscreen": false,
+    "title": "Codeforces Contest Helper v2",
+    "resizable": false,
+    "show_in_taskbar": true,
+    "width": 1000,
+    "height": 658,
+    "toolbar": true,
+    "as_desktop": false,
+    "position": "center",
+    "icon": "favicon.png",
+    "always_on_top": false,
+    "frame": false,
+    "kiosk": false,
+    "show": false,
+    "transparent": true
+  },
+  "single-instance": true,
+  "main": "index.html",
+  "chromium-args": "--disable-web-security --user-data-dir --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-renderer-backgrounding",
+  "double-tap-to-zoom-enabled": false,
+  "webkit": {
+    "page-cache": false,
+    "plugin": true,
+    "java": true
+  },
+  "dependencies": {
+    "bing-translate-api": "^4.0.0"
+  }
 }
