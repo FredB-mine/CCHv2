@@ -1,34 +1,3 @@
-var lang_list = [
-    "auto",
-    "zh",
-    "en",
-    "yue",
-    "wyw",
-    "jp",
-    "kor",
-    "fra",
-    "spa",
-    "th",
-    "ara",
-    "ru",
-    "pt",
-    "de",
-    "it",
-    "el",
-    "nl",
-    "pl",
-    "bul",
-    "est",
-    "dan",
-    "fin",
-    "cs",
-    "rom",
-    "slo",
-    "swe",
-    "hu",
-    "cht",
-    "vie",
-];
 /**
  * Replace the formula blocks in the text
  * into '{}' forms to avoid translate issues
@@ -70,46 +39,12 @@ function recoverBlock(text, formula) {
     var res = "";
     for (var i = 0, j = 0; i < text.length - 1; i++) {
         if (text[i] === "[" && text[i + 1] === "]") {
-            (res += "$" + formula[j++] + "$"), i++;
+            (res += "$$$" + formula[j++] + "$$$"), i++;
         } else if (text[i] !== "]") {
             res += text[i];
         }
     }
     return res;
 }
-/**
- * Translate the text from $from_lang to $to_lang
- *
- * @param {String} query
- * @param {String} from_lang
- * @param {String} to_lang
- * @returns Translation query promise;
- */
-function translate(query, from_lang, to_lang) {
-    if (lang_list.indexOf(from_lang) === -1) {
-        throw new Error("Invalid from_lang = " + from_lang);
-    }
-    if (lang_list.indexOf(to_lang) === -1) {
-        throw new Error("Invalid to_lang = " + to_lang);
-    }
-    var appid = "20220602001236448";
-    var key = "GtVUOpsUvCgfxjXsQ1iC";
-    var salt = new Date().getTime();
-    // 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
-    var sign = md5(appid + query + salt + key);
-    return $.ajax({
-        url: "https://api.fanyi.baidu.com/api/trans/vip/translate",
-        type: "get",
-        dataType: "jsonp",
-        async: false,
-        data: {
-            q: query,
-            appid: appid,
-            salt: salt,
-            from: from_lang,
-            to: to_lang,
-            sign: sign,
-            domain: "it",
-        },
-    });
-}
+
+const { translate } = require("bing-translate-api");
