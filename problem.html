@@ -146,6 +146,7 @@
     <script src="./js/translate.js"></script>
     <script>
       reloadSettings();
+      var problem_id_tmp;
       if(!RunInNwjs){
         $('body').css('margin', '8px').css("width", "calc(100% - 16px)").css("height", "calc(100% - 16px)");
         if(!DarkMode)
@@ -241,19 +242,21 @@
       }
       function loadTranslateOption() {
         $(".translateInfo").unbind("click").click(function() {
-          var content = $(this).parent().parent().attr("origin-html");
-          translate(content, 'auto', 'zh').then((result) => {
-            var translated = "";
-            var lis = result.trans_result;
-            for (var i = 0; i < lis.length; i++) {
-              translated += lis[i].dst + '\n';
-            }
-            translated = translated.replace()
+          var content = $(this).parent().parent().attr("statement-info");
+          var replace_info = replaceBlock(content);
+          var rand_id = $(this).parent().parent().attr("rnd-id");
+          // alert($(this).parent().parent().attr('origin-html'));
+          translate(replace_info.text, null, 'zh-Hans').then((result) => {
+            var translated = recoverBlock(
+              result.translation, replace_info.formula
+            );
             var content_html= $(
-              `<div class="blockManagerContent" id="${rnd}">
-                  ${qq.eq(i).html()}
+              `<div class="blockManagerContent" id="${rand_id}" style="white-space: pre-line">
+                ${translated}
               </div>`
             );
+            $(this).parent().parent().append(content_html);
+            reloadMath(problem_id_tmp);
           }).catch((err) => {
             alert('Translation Error: ' + err);
           });
@@ -263,6 +266,9 @@
         alert(x);
       }
       function reloadMath(id) {
+        if (problem_id_tmp === undefined) {
+          problem_id_tmp = id;
+        }
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(id)]);
       }
     </script>
