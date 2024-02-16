@@ -73,6 +73,17 @@ function getOutputFileType(x) {
 function initProblemPageInfo(page, data, id) {
     page.html("");
     page.append(
+        $(`<a class="luoguLink" style="display: flex; justify-content: flex-end;">
+            <img style="width:45px; margin-right:20px;" src="https://cdn.luogu.com.cn/fe/logo.png">
+        </a>`).click(function () {
+            event.stopPropagation();
+            openURL(
+                `https://www.luogu.com.cn/problem/CF${problemCurrentPageList[id][0]}`
+            );
+            return false;
+        })
+    );
+    page.append(
         `<div class="problemTitle">${data.find(".title").html()}</div>`
     );
     problemCurrentPageList[id][4].title = data.find(".title").html();
